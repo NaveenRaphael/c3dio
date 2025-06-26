@@ -476,11 +476,11 @@ fn get_actual_start_and_end_fields(
 ) -> Result<(Option<usize>, Option<usize>), C3dParseError> {
     let end_field = parameters.remove("TRIAL", "ACTUAL_END_FIELD");
     let actual_end_field = if end_field.is_some() {
-        let end_field: Vec<i16> = end_field.unwrap().as_ref().try_into()?;
+        let end_field: Vec<u16> = end_field.unwrap().as_ref().try_into()?;
         if end_field.len() != 2 {
             None
         } else {
-            Some(end_field[0] as u16 as usize + (end_field[1] as u16 * 65535) as usize)
+            Some(end_field[0] as usize + (end_field[1] as usize * 65535))
         }
     } else {
         None
